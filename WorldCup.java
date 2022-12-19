@@ -129,7 +129,6 @@ public class WorldCup {
         groupH.results();
         System.out.println();
         System.out.println("-----------------------------------");
-        System.out.println();
 
 
         //knockout stages
@@ -139,18 +138,29 @@ public class WorldCup {
             groupB.getFirst(), groupA.getSecond(), groupD.getFirst(), groupC.getSecond(),
             groupF.getFirst(), groupE.getSecond(), groupH.getFirst(), groupG.getSecond(),
         };
+        System.out.println("ROUND OF 16 MATCHUPS");
+        printOut(sixteen);
         System.out.println("ROUND OF 16");
         Country[] quarterFinalists = roundOfSixteen(sixteen);
         Country[] sixteenLosers = losers(sixteen, quarterFinalists);
 
+        System.out.println("QUARTERFINALS MATCHUPS");
+        printOut(quarterFinalists);
         System.out.println("QUARTERFINALS");
         Country[] semiFinalists = quarterFinals(quarterFinalists);
         Country[] quarterLosers = losers(quarterFinalists, semiFinalists);
 
+        
+        System.out.println("SEMIFINALS MATCHUPS");
+        printOut(semiFinalists);
         System.out.println("SEMIFINALS");
         Country[] two = semiFinals(semiFinalists);
         Country[] semiLosers = losers(semiFinalists, two);
+        System.out.println("THIRD PLACE GAME MATCHUP");
+        printOut(semiLosers);
+        System.out.println("THIRD PLACE GAME");
         Country thirdPlace = playoffGame(semiLosers[0], semiLosers[1]);
+        System.out.println("-----------------------------------");
         Country fourthPlace;
         if (semiLosers[0].equals(thirdPlace)) {
             fourthPlace = semiLosers[1];
@@ -158,6 +168,8 @@ public class WorldCup {
             fourthPlace = semiLosers[0];
         }
 
+        System.out.println("FINALS MATCHUP");
+        printOut(two);
         System.out.println("FINALS");
         Country winner = playoffGame(two[0], two[1]);
         Country runnerUp;
@@ -166,7 +178,10 @@ public class WorldCup {
         } else {
             runnerUp = two[0];
         }
-        System.out.println(winner.name + " wins!!!!!");
+        //System.out.println(winner.name + " wins!!!!!");
+
+
+
         System.out.println("-----------------------------------");
         System.out.println("TOP 16:");
         for (Country c : sixteenLosers) {
@@ -193,7 +208,7 @@ public class WorldCup {
         double x = Math.random();
         double probTie = probabilityTie(a, b);
         double probNotTie = 1 - probTie;
-        double aWins = Math.pow(10, ((double) (a.rating - b.rating))/300);
+        double aWins = Math.pow(10, ((double) (a.rating - b.rating))/200);
         double probAWins = aWins/(1 + aWins);
         double actualProbAWins = probAWins * probNotTie;
         if (x <= probTie/2) {
@@ -287,6 +302,13 @@ public class WorldCup {
             }
         }
         return losers;
+    }
+
+    public static void printOut(Country[] countries) {
+        for (int i = 0; i < countries.length; i += 2) {
+            System.out.println(countries[i].name + " vs. " + countries[i + 1].name);
+        }
+        System.out.println("-----------------------------------");
     }
 }
 
@@ -474,7 +496,7 @@ class WorldCupGroup {
         double x = Math.random();
         double probTie = probabilityTie(a, b);
         double probNotTie = 1 - probTie;
-        double aWins = Math.pow(10, ((double) (a.rating - b.rating))/300);
+        double aWins = Math.pow(10, ((double) (a.rating - b.rating))/200);
         double probAWins = aWins/(1 + aWins);
         double actualProbAWins = probAWins * probNotTie;
         if (x <= probTie) {
