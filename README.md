@@ -1,2 +1,2 @@
 # World-Cup-Predictions
-World Cup!
+A world cup Java simulator in, made December 2022
